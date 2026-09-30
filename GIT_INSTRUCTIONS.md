@@ -1,7 +1,7 @@
 # Git Instructions — Participants (use on your VM)
 
-Trainer repo: **https://github.com/askanilkumar/dxcgenai**
-Your copy (fork): **https://github.com/YOUR-GITHUB/dxcgenai**
+Trainer repo: **https://github.com/askanilkumar/dxc-agentic-ai**
+Your copy (fork): **https://github.com/YOUR-GITHUB/dxc-agentic-ai**
 Your folder on the VM: **`C:\AskIT\dxc-agentic-ai`** (never move or rename it)
 
 **How it works:** the trainer publishes content to his repo (called `upstream`). You keep your own copy on GitHub (called `origin`).
@@ -36,28 +36,28 @@ Check: `git config --global --list`
 
 ### 3. Fork the trainer repo (in the browser)
 1. Sign in to **your** GitHub account.
-2. Open https://github.com/askanilkumar/dxcgenai
-3. Click **Fork** → **Create fork**. You now have `https://github.com/YOUR-GITHUB/dxcgenai`
+2. Open https://github.com/askanilkumar/dxc-agentic-ai
+3. Click **Fork** → **Create fork**. You now have `https://github.com/YOUR-GITHUB/dxc-agentic-ai`
 
 ### 4. Clone YOUR fork into C:\AskIT (replace YOUR-GITHUB)
 Run from any folder — `mkdir` creates `C:\AskIT` and `cd` moves you there:
 ```
 mkdir C:\AskIT
 cd /d C:\AskIT
-git clone https://github.com/YOUR-GITHUB/dxcgenai.git dxc-agentic-ai
+git clone https://github.com/YOUR-GITHUB/dxc-agentic-ai.git dxc-agentic-ai
 cd dxc-agentic-ai
 ```
 A GitHub sign-in window may open — sign in and click authorize (it remembers you after that).
 
 ### 5. Link the trainer repo as `upstream` (SETUP.bat also does this)
 ```
-git remote add upstream https://github.com/askanilkumar/dxcgenai.git
+git remote add upstream https://github.com/askanilkumar/dxc-agentic-ai.git
 git remote -v
 ```
-You must see **origin = your fork** and **upstream = askanilkumar/dxcgenai**.
+You must see **origin = your fork** and **upstream = askanilkumar/dxc-agentic-ai**.
 If `origin` shows `askanilkumar` you cloned the wrong repo → fix:
 ```
-git remote set-url origin https://github.com/YOUR-GITHUB/dxcgenai.git
+git remote set-url origin https://github.com/YOUR-GITHUB/dxc-agentic-ai.git
 ```
 
 ### 6. Run setup
@@ -103,7 +103,7 @@ Check on GitHub: open your fork → you should see your latest commit and the `p
 |---|---|
 | `git` is not recognised | Tell the trainer — Git not on PATH |
 | Push asks for a password / fails | Sign in through the GitHub browser popup (passwords no longer work for git); make sure you cloned **your** fork |
-| `403` / permission denied on push | `origin` is the trainer repo. Run: `git remote set-url origin https://github.com/YOUR-GITHUB/dxcgenai.git` |
+| `403` / permission denied on push | `origin` is the trainer repo. Run: `git remote set-url origin https://github.com/YOUR-GITHUB/dxc-agentic-ai.git` |
 | Push rejected (fork is ahead/behind) | `git pull origin main --no-edit` then push again |
 | Merge conflict after pulling | You edited a file outside `DayNN\Labs\` or `teams\`. Run `git merge --abort`, then call the trainer |
 | `Author identity unknown` | Redo step 2 (git config user.name / user.email) |

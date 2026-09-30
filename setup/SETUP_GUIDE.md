@@ -12,15 +12,15 @@ git --version
 ## Step 1 — Fork the course repo
 1. On the VM browser, sign in to **your** GitHub account.
 2. Open the trainer repo link shared in the Teams chat.
-3. Click **Fork** → keep the name **dxcgenai** → **Create fork**.
-   (Trainer repo: https://github.com/askanilkumar/dxcgenai)
+3. Click **Fork** → keep the name **dxc-agentic-ai** → **Create fork**.
+   (Trainer repo: https://github.com/askanilkumar/dxc-agentic-ai)
 
 ## Step 2 — Clone your fork to C:\AskIT
 Open **Command Prompt** and run (replace `YOUR-GITHUB`):
 ```
 mkdir C:\AskIT
 cd /d C:\AskIT
-git clone https://github.com/YOUR-GITHUB/dxcgenai.git dxc-agentic-ai
+git clone https://github.com/YOUR-GITHUB/dxc-agentic-ai.git dxc-agentic-ai
 ```
 ✅ You now have `C:\AskIT\dxc-agentic-ai` (the last word in the command renames the folder — keep it exactly)
 

@@ -1,7 +1,7 @@
 @echo off
 REM ===== ONE-TIME SETUP (run once, in Session 1) =====
 setlocal
-set UPSTREAM=https://github.com/askanilkumar/dxcgenai.git
+set UPSTREAM=https://github.com/askanilkumar/dxc-agentic-ai.git
 cd /d C:\AskIT\dxc-agentic-ai || (echo [!!] Repo must be at C:\AskIT\dxc-agentic-ai - see setup\SETUP_GUIDE.md & pause & exit /b 1)
 echo [1/6] Linking trainer repo (upstream)...
 git remote get-url upstream >nul 2>&1 || git remote add upstream %UPSTREAM%

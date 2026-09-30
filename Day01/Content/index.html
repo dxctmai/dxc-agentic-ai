@@ -248,12 +248,13 @@ footer .bar{justify-content:space-between}
     <h2>Workbench setup + Bedrock Playground</h2>
     <div class="wwho"><div><b>What we do</b>Get your VM, GitHub fork and AWS keys working, then try three models side by side in the Bedrock console.</div><div><b>Why</b>Every later lab builds on this setup. The Playground shows how models differ before you write any code.</div><div><b>Outcome / learning</b>A working workbench, and you can explain how models differ in speed, tokens and answer quality &mdash; and what temperature does.</div><div><b>How</b>Run SETUP.bat until all green &rarr; send one helpdesk ticket to 3 models &rarr; note latency and tokens &rarr; repeat at temperature 0 vs 1.</div></div>
     <ol>
-      <li><b>One-time setup</b> — follow <span class="path">setup\SETUP_GUIDE.md</span> (fork, clone to <span class="path">C:\AskIT</span>, run <span class="path">SETUP.bat</span>) <span class="tag">setup</span></li>
-      <li><b>Environment check</b> — <span class="path">SETUP.bat</span> ends with every line green <span class="tag">setup</span></li>
-      <li><b>Task A1:</b> In the Bedrock Playground, send the same ticket to <b>3 models</b>. Record latency and tokens in <span class="path">submission\labA_playground.md</span> <span class="tag">AWS</span></li>
-      <li><b>Task A2:</b> Run the same prompt 3× at temperature 0 and 3× at temperature 1. What changed? <span class="tag">AWS</span></li>
-      <li><b>Stretch:</b> Try an open-weight model (Llama or Mistral) — how does it compare? <span class="tag">stretch</span></li>
+      <li><b>Setup (once):</b> PowerShell &rarr; <span class="path">cd C:\AskIT\dxc-agentic-ai</span> &rarr; <span class="path">SETUP.bat</span>. Done when <b>AWS credentials</b> and <b>Bedrock model call</b> show [OK].</li>
+      <li><b>Open Bedrock:</b> AWS console &rarr; sign in with your user &rarr; region <b>N. Virginia</b> &rarr; search <b>Bedrock</b> &rarr; <b>Playgrounds &rarr; Chat</b>.</li>
+      <li><b>Task A1:</b> send the ticket (text is in <span class="path">A_bedrock_playground.md</span>) to <b>3 models</b>. Write latency, tokens and your 1&ndash;5 rating in <span class="path">submission\labA_playground.md</span>.</li>
+      <li><b>Task A2:</b> one model, 3&times; at temperature <b>0</b>, 3&times; at <b>1</b>. What changed?</li>
+      <li><span class="tag">stretch</span> Try an open-weight model (Llama or Mistral).</li>
     </ol>
+    <div class="card"><b>Stuck?</b> Model missing or &ldquo;access denied&rdquo; &rarr; tell the trainer, move on to the next model.</div>
         <div class="openpath">📂 Open in VS Code: <span class="path">C:\AskIT\dxc-agentic-ai\Day01\Labs\lab01-hello-llm\A_bedrock_playground.md</span></div>
     <div class="row"><button class="btn ghost" data-done="labA">✅ I finished Lab A (+20 XP)</button></div>
   </div>
@@ -305,13 +306,14 @@ footer .bar{justify-content:space-between}
     <h2>Your first Bedrock call — and a model shoot-out</h2>
     <div class="wwho"><div><b>What we do</b>Make your first Bedrock Converse API call from Python and compare a small and a large model on real tickets.</div><div><b>Why</b>Every agent we build is a loop around this one call. Tokens and latency are what you pay for.</div><div><b>Outcome / learning</b>You can call an LLM from code, read tokens and latency, and choose a small or large model based on evidence.</div><div><b>How</b>Complete 3 TODOs in lab01a_first_call.py &rarr; run 5 tickets on both models &rarr; run pytest.</div></div>
     <ol>
-      <li>Open <span class="path">Day01/Labs/lab01-hello-llm/lab01a_first_call.py</span> — most of it is ready</li>
-      <li><b>Challenge 1 (TODO-1):</b> send a ticket to Bedrock using the Converse API</li>
-      <li><b>Challenge 2 (TODO-2):</b> print input tokens, output tokens and latency</li>
-      <li><b>Challenge 3 (TODO-3):</b> run 5 tickets on a small and a large model, then <b>run the script</b> to save your results</li>
-      <li><b>Stretch:</b> estimate the daily cost of 1,000 tickets/day with each model</li>
-      <li>Check yourself: <span class="path">pytest Day01\Labs\lab01-hello-llm</span> (Day End will push everything)</li>
+      <li><b>Get ready:</b> PowerShell &rarr; <span class="path">cd C:\AskIT\dxc-agentic-ai</span> &rarr; <span class="path">.venv\Scripts\activate</span>. You must see <b>(.venv)</b> at the start of the line.</li>
+      <li><b>Open the file:</b> <span class="path">cd Day01\Labs\lab01-hello-llm</span> &rarr; <span class="path">notepad lab01a_first_call.py</span> (or VS Code). Search for <b>TODO</b>.</li>
+      <li><b>Fill 3 TODOs</b> (hints are in the file): <b>TODO-1</b> call Bedrock and get the reply text &middot; <b>TODO-2</b> read input/output tokens &middot; <b>TODO-3</b> loop over 2 models &times; 5 tickets.</li>
+      <li><b>Run:</b> <span class="path">python lab01a_first_call.py</span>. You should see one reply with tokens, then average latency for both models.</li>
+      <li><b>Check:</b> <span class="path">pytest</span> &rarr; challenges 1&ndash;3 pass.</li>
+      <li><span class="tag">stretch</span> Estimate the daily cost of 1,000 tickets/day for each model.</li>
     </ol>
+    <div class="card"><b>Think:</b> which model would you choose for AskIT&rsquo;s first reply &mdash; and why?<br><b>Stuck?</b> No <b>(.venv)</b> &rarr; run the activate line again &middot; <b>IndentationError</b> &rarr; every line inside a function starts with the same 4 spaces &middot; <b>AccessDenied</b> &rarr; tell the trainer.</div>
     <div class="openpath">📂 Open in VS Code: <span class="path">C:\AskIT\dxc-agentic-ai\Day01\Labs\lab01-hello-llm\README.md</span></div>
     <div class="row"><button class="btn ghost" data-done="labB">✅ I finished Lab B (+20 XP)</button></div>
   </div>
@@ -427,14 +429,14 @@ footer .bar{justify-content:space-between}
     <h2>Structured ticket extraction + your first trace</h2>
     <div class="wwho"><div><b>What we do</b>Turn messy ticket text into clean, validated fields (category, priority, user, summary, sentiment) and trace every call in Langfuse.</div><div><b>Why</b>Agents need data, not prose. Structured output plus validation makes results reliable, and tracing shows what the model actually did.</div><div><b>Outcome / learning</b>Reliable structured output from an LLM, and your first trace to debug from.</div><div><b>How</b>Define the Ticket schema (TODO-4) &rarr; force the model to answer through a tool call and validate it (TODO-5) &rarr; add Langfuse tracing (TODO-6).</div></div>
     <ol>
-      <li>Open <span class="path">Day01/Labs/lab01-hello-llm/lab01b_extract.py</span></li>
-      <li><b>Challenge 4 (TODO-4):</b> complete the <b>Ticket</b> schema — category, priority, user_id, summary, sentiment</li>
-      <li><b>Challenge 5 (TODO-5):</b> get structured output from Bedrock and validate it</li>
-      <li><b>Challenge 6 (TODO-6):</b> add Langfuse tracing, run the script, paste your trace URL into <span class="path">submission\trace_url.txt</span></li>
-      <li><b>Stretch A:</b> extract the same ticket 5× at temperature 0 and 5× at 1 — how consistent are the fields?</li>
-      <li><b>Stretch B:</b> run all 100 tickets — print the category and priority split</li>
-      <li>Check yourself: <span class="path">pytest Day01\Labs\lab01-hello-llm</span> (Day End will push everything)</li>
+      <li><b>Same folder, same (.venv).</b> Open <span class="path">lab01b_extract.py</span> and search for <b>TODO-4</b>.</li>
+      <li><b>TODO-4:</b> finish the <b>Ticket</b> schema (5 fields with rules).</li>
+      <li><b>TODO-5:</b> make the model answer through a tool call, then validate it against the schema.</li>
+      <li><b>TODO-6:</b> add Langfuse tracing (needs the Langfuse keys in <span class="path">.env</span>), run <span class="path">python lab01b_extract.py</span>, put your trace URL in <span class="path">submission\trace_url.txt</span>.</li>
+      <li><b>Check:</b> <span class="path">pytest</span> &rarr; all 6 pass.</li>
+      <li><span class="tag">stretch</span> Same ticket 5&times; at temperature 0 vs 1 &mdash; how many fields change?</li>
     </ol>
+    <div class="card"><b>Stuck?</b> No trace in Langfuse &rarr; wait 30 s, check the keys in <span class="path">.env</span> &middot; Throttling &rarr; wait 30 s and re-run.</div>
     <div class="openpath">📂 Open in VS Code: <span class="path">C:\AskIT\dxc-agentic-ai\Day01\Labs\lab01-hello-llm\README.md</span></div>
     <div class="row"><button class="btn ghost" data-done="labC">✅ I finished Lab C (+20 XP)</button></div>
   </div>
