@@ -432,7 +432,8 @@ footer .bar{justify-content:space-between}
       <li><b>Same folder, same (.venv).</b> Open <span class="path">lab01b_extract.py</span> and search for <b>TODO-4</b>.</li>
       <li><b>TODO-4:</b> finish the <b>Ticket</b> schema (5 fields with rules).</li>
       <li><b>TODO-5:</b> make the model answer through a tool call, then validate it against the schema.</li>
-      <li><b>TODO-6:</b> add Langfuse tracing (needs the Langfuse keys in <span class="path">.env</span>), run <span class="path">python lab01b_extract.py</span>, put your trace URL in <span class="path">submission\trace_url.txt</span>.</li>
+      <li><b>Langfuse keys:</b> the trainer shares your team keys. Open <span class="path">notepad .env</span>, fill <b>LANGFUSE_PUBLIC_KEY</b>, <b>LANGFUSE_SECRET_KEY</b>, <b>LANGFUSE_HOST</b>, save. Check: <span class="path">python tools\verify_env.py</span> &rarr; Langfuse [OK].</li>
+      <li><b>TODO-6:</b> add Langfuse tracing, run <span class="path">python lab01b_extract.py</span>. Then open Langfuse &rarr; <b>Tracing</b> &rarr; click your latest <b>extract_ticket</b> trace &rarr; copy its URL into <span class="path">submission\trace_url.txt</span>.</li>
       <li><b>Check:</b> <span class="path">pytest</span> &rarr; all 6 pass.</li>
       <li><span class="tag">stretch</span> Same ticket 5&times; at temperature 0 vs 1 &mdash; how many fields change?</li>
     </ol>

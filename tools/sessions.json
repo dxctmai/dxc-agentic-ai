@@ -7,5 +7,14 @@
       "lab01-hello-llm"
     ],
     "labs_dir": "Day01/Labs"
+  },
+  "S02": {
+    "title": "Embeddings & Naive RAG",
+    "date": "2026-10-01",
+    "html": "Day02/Content/index.html",
+    "labs_dir": "Day02/Labs",
+    "labs": [
+      "lab02-naive-rag"
+    ]
   }
 }

@@ -5,6 +5,7 @@ Used two ways:
   2. Directly: DAY_END.bat  ->  python tools/day_end.py [S01]
 """
 import json
+import os
 import subprocess
 import sys
 import threading
@@ -24,13 +25,15 @@ def load_me():
 
 
 def today_session():
-    """Session whose date is today; else the latest session already past; else S01."""
-    today = datetime.now().date().isoformat()
-    past = [k for k, v in SESSIONS.items() if v["date"] <= today]
-    for k, v in SESSIONS.items():
-        if v["date"] == today:
-            return k
-    return past[-1] if past else "S01"
+    """Session picked by START_DAY.bat <number> (env ASKIT_DAY). No date check.
+    Without a number: the last session whose page exists."""
+    n = os.environ.get("ASKIT_DAY", "").strip()
+    if n.isdigit():
+        key = f"S{int(n):02d}"
+        if key in SESSIONS:
+            return key
+    have = [k for k, v in SESSIONS.items() if (ROOT / v["html"]).exists()]
+    return have[-1] if have else "S01"
 
 
 def run(cmd, timeout=180):

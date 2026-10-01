@@ -67,7 +67,7 @@ Double-click **`C:\AskIT\dxc-agentic-ai\SETUP.bat`** (see setup\SETUP_GUIDE.md).
 
 ## PART 2 — Every morning: get the day's code and HTML
 
-**Easy way:** double-click **`START_DAY.bat`**. It pulls and opens today's page. Keep the black window open.
+**Easy way:** in Command Prompt run **`START_DAY.bat 1`** (Day 1 page) or **`START_DAY.bat 2`** (Day 2 page). Double-click also works: it asks "Which day?". It pulls the new content and opens that day's page. Keep the black window open.
 
 **Manual way** (if START_DAY says "could not update"):
 ```
