@@ -12,6 +12,10 @@
     "lab2b": false,
     "lab2c": false
   },
-  "participant": null,
-  "updated_at": "2026-10-05T06:10:01.945142+00:00"
+  "participant": {
+    "name": "Thanh Mai",
+    "github_user": "dxctmai@gmail.com",
+    "team": "B"
+  },
+  "updated_at": "2026-10-05T06:12:40.377801+00:00"
 }

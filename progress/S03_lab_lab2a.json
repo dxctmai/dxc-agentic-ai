@@ -1,0 +1,25 @@
+{
+  "session": "S03",
+  "lab": "lab2a",
+  "title": "Lab 2A",
+  "folder": "lab02-naive-rag",
+  "participant": {
+    "name": "Thanh Mai",
+    "github_user": "dxctmai@gmail.com",
+    "team": "B"
+  },
+  "submitted_at": "2026-10-05T06:12:56.338287+00:00",
+  "attempts": 1,
+  "passed": [
+    "test_challenge_1_embed",
+    "test_challenge_2_cosine",
+    "test_challenge_3_top_k"
+  ],
+  "failed": [],
+  "total": 3,
+  "stretch": null,
+  "evidence": {
+    "files": {},
+    "eval_runs": []
+  }
+}
