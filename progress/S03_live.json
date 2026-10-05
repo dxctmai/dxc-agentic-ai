@@ -3,10 +3,10 @@
   "section": "\u2462 RAG",
   "section_idx": 5,
   "sections_total": 10,
-  "xp_total": 118,
-  "active_minutes": 55,
-  "quiz_answered": 7,
-  "quiz_correct": 7,
+  "xp_total": 149,
+  "active_minutes": 59,
+  "quiz_answered": 10,
+  "quiz_correct": 10,
   "labs_self_reported": {
     "lab2a": true,
     "lab2b": false,
@@ -17,5 +17,5 @@
     "github_user": "dxctmai@gmail.com",
     "team": "B"
   },
-  "updated_at": "2026-10-05T06:53:16.293616+00:00"
+  "updated_at": "2026-10-05T06:57:38.326511+00:00"
 }
