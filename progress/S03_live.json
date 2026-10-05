@@ -1,12 +1,12 @@
 {
   "session": "S03",
-  "section": "\u2461 Chunking",
-  "section_idx": 3,
+  "section": "\u2462 RAG",
+  "section_idx": 5,
   "sections_total": 10,
-  "xp_total": 83,
-  "active_minutes": 54,
-  "quiz_answered": 4,
-  "quiz_correct": 4,
+  "xp_total": 118,
+  "active_minutes": 55,
+  "quiz_answered": 7,
+  "quiz_correct": 7,
   "labs_self_reported": {
     "lab2a": true,
     "lab2b": false,
@@ -17,5 +17,5 @@
     "github_user": "dxctmai@gmail.com",
     "team": "B"
   },
-  "updated_at": "2026-10-05T06:47:43.399996+00:00"
+  "updated_at": "2026-10-05T06:53:16.293616+00:00"
 }
