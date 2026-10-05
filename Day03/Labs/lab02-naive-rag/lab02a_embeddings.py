@@ -39,12 +39,12 @@ def embed(client, text, dimensions=512):
     #        (2) call client.invoke_model with the model id and that body
     #        (3) the reply body is a stream: read it, parse the JSON, take "embedding"
     # SKELETON (fill the ___):
-    #   body = json.dumps({"inputText": ___, "dimensions": ___, "normalize": True})
-    #   response = client.invoke_model(modelId=___, body=body)
-    #   result = json.loads(response["body"].___())
-    #   return result["___"]
-    # My prediction: how many numbers will come back for one sentence? ____
-    raise NotImplementedError("TODO-1")
+    body = json.dumps({"inputText": text, "dimensions": dimensions, "normalize": True})
+    response = client.invoke_model(modelId=EMBED_MODEL, body=body)
+    result = json.loads(response["body"].read())
+    return result["embedding"]
+    # My prediction: how many numbers will come back for one sentence? 512
+    # raise NotImplementedError("TODO-1")
 
 
 def cosine(a, b):
@@ -56,9 +56,11 @@ def cosine(a, b):
     # STEPS: multiply the two vectors element by element and add up (np.dot), then
     #        divide by the length of each vector (np.linalg.norm). Return a float().
     # SKELETON:  float( np.dot(a, b) / ( np.linalg.norm(___) * np.linalg.norm(___) ) )
+    a, b = np.asarray(a, dtype=float), np.asarray(b, dtype=float)
+    return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b)))
     # My prediction: score for ("locked out of account", "can't sign in") will be
-    #        close to ____ and for ("locked out", "printer jammed") close to ____
-    raise NotImplementedError("TODO-2")
+    #        close to 1 and for ("locked out", "printer jammed") close to 0
+    # raise NotImplementedError("TODO-2")
 
 
 def top_k(query_vec, items, k=3):
@@ -71,8 +73,13 @@ def top_k(query_vec, items, k=3):
     #        (2) sort the scores, highest first
     #        (3) keep only the first k and return them as {"id": ..., "score": ...}
     # Hint:  sorted(list, key=lambda x: x["score"], reverse=___) and list[:k]
-    # My prediction: will the top match for "VPN keeps dropping" be a VPN article? ____
-    raise NotImplementedError("TODO-3")
+    # THANH:
+    # sorted_items = sorted(items, key=lambda x: x["score"], reverse=True)
+    # return sorted_items[:k]
+    scored = [{"id": it["id"], "score": cosine(query_vec, it["vector"])} for it in items]
+    return sorted(scored, key=lambda x: x["score"], reverse=True)[:k]
+    # My prediction: will the top match for "VPN keeps dropping" be a VPN article? Yes
+    # raise NotImplementedError("TODO-3")
 
 
 PAIRS = [
