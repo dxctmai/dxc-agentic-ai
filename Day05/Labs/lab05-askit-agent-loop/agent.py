@@ -41,7 +41,7 @@ Rules:
 5. When you have the answer, reply in 2-3 short sentences."""
 
 MAX_STEPS = 6            # the agent may take at most this many turns. Agents ALWAYS need a stop.
-STOP_ON_REPEAT = False      # Incident lab: change False to True. The agent then stops when it repeats the same call.
+STOP_ON_REPEAT = True   # Incident lab: change False to True. The agent then stops when it repeats the same call.
 
 
 # =============================================================================================
@@ -132,14 +132,17 @@ def get_user(user_id):
     """STRETCH-A: return {"user_id", "name", "department", "vip"} for an employee (data: load_users()).
     If the user does not exist, return {"error": "User <id> not found."}.
     Then remove the two '#' in front of the lines just below this function to register the tool."""
-    return {"error": "STRETCH-A not built yet"}
+    for u in load_users():                                   # each u is a dict from users.csv
+        if u["user_id"].lower() == str(user_id).strip().lower():
+            return {"user_id": u["user_id"], "name": u["name"], "department": u["department"], "vip": u["vip"]}
+    return {"error": f"User {user_id} not found."}
 
 
 GET_USER_SPEC = {"toolSpec": {"name": "get_user", "description": "Look up an employee by id: name, department, VIP flag.",
                               "inputSchema": {"json": {"type": "object", "required": ["user_id"],
                                                        "properties": {"user_id": {"type": "string"}}}}}}
-# TOOLS = {**TOOLS, "get_user": get_user}                    # register: the function ...
-# TOOL_SPECS = TOOL_SPECS + [GET_USER_SPEC]                  # ... and what the model is told about it
+TOOLS = {**TOOLS, "get_user": get_user}                    # register: the function ...
+TOOL_SPECS = TOOL_SPECS + [GET_USER_SPEC]                  # ... and what the model is told about it
 
 
 # =============================================================================================
@@ -181,11 +184,30 @@ def run_agent(question, call_model=None, max_steps=MAX_STEPS, approve=None):
         #          say(result, f"Step {step}: 🔧 {req['name']}({short(req['input'])}) -> {short(output)}")
         #          blocks.append(make_tool_result(req["id"], output))   wrap the answer
         #   4. messages.append({"role": "user", "content": blocks})   send all the answers back to the model
-        break   # <- delete this line when PART A and PART B are written
+        #break   # <- delete this line when PART A and PART B are written
+
+        if not requests:                                                  # PART A: no tool request = the model is finished
+            result["answer"] = final_text(response)                       # its text IS the answer
+            say(result, f"Step {step}: ✅ final answer")
+            return result
+
+        messages.append(response["output"]["message"])                    # PART B-1: remember the model's tool request
+        blocks = []                                                       # PART B-2: all tool answers go back in ONE message
+        for req in requests:
+            if STOP_ON_REPEAT and is_repeat(history, req["name"], req["input"]):    # Incident: the exact same call again?
+                return give_up(result, "I kept repeating the same action, so a human will take over.")
+            history.append((req["name"], req["input"]))                   # remember this call
+            output = run_tool_safely(req["name"], req["input"], approve)  # ACT: run the tool
+            say(result, f"Step {step}: 🔧 {req['name']}({short(req['input'])}) -> {short(output)}")   # OBSERVE: print what came back
+            blocks.append(make_tool_result(req["id"], output))            # wrap the answer for the model
+        messages.append({"role": "user", "content": blocks})              # PART B-4: give the answers back to the model
 
     # PART C. If we get here the loop ran out of steps without an answer. Replace the next line with:
     #       return give_up(result, f"I could not finish within {max_steps} steps, so a human will take over.")
-    return result
+    #return result
+
+    # PART C: the loop ended without an answer = out of steps. Hand over to a human.
+    return give_up(result, f"I could not finish within {max_steps} steps, so a human will take over.")
 
 
 # =============================================================================================
@@ -198,7 +220,7 @@ def needs_approval(name, args):
     Two tools CHANGE data:      update_ticket, reset_password  -> return True
     Replace the line  return False  with ONE line. Full answer: Hints file, TODO-2.
     """
-    return False
+    return name in ("update_ticket", "reset_password")       # the two tools that change something
 
 
 def ask_human(name, args):
@@ -214,7 +236,14 @@ def vip_block(name, args):
       - the person it is about is a VIP (users.csv column 'vip' == 'yes').
     For reset_password the person is args["user_id"]. For update_ticket find the ticket's user_id first
     (data: load_tickets()). Everything else: return False."""
-    return False
+    if not needs_approval(name, args):
+        return False                                         # reading is always fine
+    user_id = args.get("user_id")
+    if name == "update_ticket":                              # a ticket belongs to a user: look it up
+        ticket = next((t for t in load_tickets() if t["ticket_id"] == args.get("ticket_id")), None)
+        user_id = ticket["user_id"] if ticket else None
+    user = next((u for u in load_users() if u["user_id"] == user_id), None)
+    return bool(user and user["vip"].lower() == "yes")
 
 
 def run_tool_safely(name, args, approve=None):
