@@ -44,6 +44,10 @@ GOLDEN = [
 #   audience = optional: "Employee" or "Contractor" (leave out to use the sidebar choice)
 MY_QUESTIONS = [
     # dict(q="...", doc="KB-0xx_name", key="...", expected="..."),
+    dict(q="How to report phishing?", doc="KB-019_phishing", key="phishing",
+        expected="Use the Report Phishing button in Outlook. Do not forward suspicious emails"),
+    dict(q="Do Orbit IT ask for your password by email?", doc="KB-019_phishing", key="phishing",
+        expected="Orbit IT will never ask for your password or MFA code by email, chat or phone"),
 ]
 GOLDEN = GOLDEN + MY_QUESTIONS
 
