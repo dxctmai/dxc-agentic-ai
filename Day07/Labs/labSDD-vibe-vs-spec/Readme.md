@@ -61,7 +61,7 @@ Save it as vibe/triage.py
 .\score.bat vibe
 ```
 
-4. Write down: **Vibe score = ___ / 16**
+4. Write down: **Vibe score = 5 / 16**
 
 5. **Rename this chat as Vibe Chat** for easy identification: right-click the chat and choose Rename.
 
@@ -105,8 +105,8 @@ Output keys: `priority` ("P1".."P4"), `queue` (str), `sla_hours` (int)
 - R4 SLA hours: P1 = 4, P2 = 8, P3 = 24, P4 = 72
 - R5 Empty or missing title: raise ValueError
 - R6 affected_users missing: treat as 1. affected_users < 1 or not an int: raise ValueError
-- R7 TODO: decide what happens when the description is None (we say: ______)
-- R8 TODO: decide whether to log anything (we say: ______)
+- R7 TODO: decide what happens when the description is None (we say: type : treat it as an empty string, do not raise an error)
+- R8 TODO: decide whether to log anything (we say: type : no logging, the function stays pure with no I/O)
 
 ## Acceptance Criteria
 - AC1 60 affected users -> P1, SLA 4
@@ -132,7 +132,7 @@ Persistence, authentication, ML, UI.
 .\score.bat sdd
 ```
 
-4. Write down: **SDD score = ___ / 16**
+4. Write down: **SDD score = 16 / 16**
 
 5. **Rename this chat as SDD Chat** for easy identification: right-click the chat and choose Rename.
 
