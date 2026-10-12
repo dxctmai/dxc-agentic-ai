@@ -149,23 +149,17 @@ TOOL_SPECS = TOOL_SPECS + [GET_USER_SPEC]                  # ... and what the mo
 # LAB 5B  -  THE AGENT LOOP                                          (you write TODO-1 here)
 # =============================================================================================
 def run_agent(question, call_model=None, max_steps=MAX_STEPS, approve=None):
-    """Answer a question by looping:  THINK (ask the model) -> ACT (run its tool) -> OBSERVE (give it the result) -> repeat.
-
-    Returns a dict:  answer, steps, handoff (True if a human must take over), trace (list of lines),
-                     messages (the whole conversation), input_tokens, output_tokens.
-    call_model is only replaced in the tests. Normally it is provider.ask_model.
-    """
     call_model = call_model or provider.ask_model
-    messages = [{"role": "user", "content": [{"text": question}]}]       # the conversation starts with the question
+    messages = [{"role": "user", "content": [{"text": question}]}]
     result = {"answer": "", "steps": 0, "handoff": False, "trace": [], "messages": messages,
               "input_tokens": 0, "output_tokens": 0}
-    history = []                                                          # every (tool, inputs) already run
+    history = []
 
-    for step in range(1, max_steps + 1):                                  # the loop, with a hard limit
-        response = call_model(messages)                                   # THINK: ask the model what to do next
+    for step in range(1, max_steps + 1):
+        response = call_model(messages)
         result["steps"] = step
         add_usage(result, response)
-        requests = get_tool_requests(response)                            # did the model ask for a tool?
+        requests = get_tool_requests(response)
 
         # ============ TODO-1: write the rest of the loop (3 parts). Full answer: Hints file, TODO-1 ============
         # PART A. The model asked for NO tool = it already has the answer. Write these 3 lines inside  if not requests:
@@ -209,7 +203,18 @@ def run_agent(question, call_model=None, max_steps=MAX_STEPS, approve=None):
     # PART C: the loop ended without an answer = out of steps. Hand over to a human.
     return give_up(result, f"I could not finish within {max_steps} steps, so a human will take over.")
 
+        messages.append(response["output"]["message"])
+        blocks = []
+        for req in requests:
+            if STOP_ON_REPEAT and is_repeat(history, req["name"], req["input"]):
+                return give_up(result, "I kept repeating the same action, so a human will take over.")
+            history.append((req["name"], req["input"]))
+            output = run_tool_safely(req["name"], req["input"], approve)
+            say(result, f"Step {step}: 🔧 {req['name']}({short(req['input'])}) -> {short(output)}")
+            blocks.append(make_tool_result(req["id"], output))
+        messages.append({"role": "user", "content": blocks})
 
+    return give_up(result, f"I could not finish within {max_steps} steps, so a human will take over.")
 # =============================================================================================
 # LAB 5C  -  ASK A HUMAN BEFORE THE AGENT CHANGES ANYTHING          (you write TODO-2 here)
 # =============================================================================================
